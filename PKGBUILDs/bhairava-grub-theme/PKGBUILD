@@ -1,0 +1,21 @@
+# Maintainer: Gabriel Matthews <axyl.os.linux@gmail.com>
+
+pkgname=bhairava
+_destname1="/usr/share/grub/themes"
+pkgver=1.0
+pkgrel=1
+pkgdesc="Grub2 theme for the Electric Tantra Linux"
+arch=('any')
+url="https://github.com/the-Electric-Tantra-Linux/Bhairava-Grub-Theme"
+license=('GPL3')
+makedepends=('git')
+provides=("${pkgname}")
+options=(!strip !emptydirs)
+source=(${pkgname}::"git+$url.git")
+sha256sums=('SKIP')
+install="Bhairava.install"
+
+package() {
+  cd "${srcdir}"
+  find . -type f -exec install -D -m644 {} ${pkgdir}/boot/grub/themes/{} \;
+}

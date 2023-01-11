@@ -1,0 +1,27 @@
+post_install(){
+ if grep "GRUB_THEME=" /etc/default/grub 2>&1 >/dev/null; then
+    #Replace GRUB_THEME
+    sed -i "s|.*GRUB_THEME=.*|GRUB_THEME=\"/boot/grub/themes/bhairava/theme.txt\"|" /etc/default/grub
+  else
+    #Append GRUB_THEME
+    echo "GRUB_THEME=\"/boot/grub/themes/bhairava/theme.txt\"" >>/etc/default/grub
+  fi
+
+  grub-install
+  grub-mkconfig -o /boot/grub/grub.cfg
+
+
+}
+
+pre_upgrade() {
+  checkver=$(pacman -Qs bhairava | head -n 1 | awk '{print $2}')
+  target=/boot/grub/themes/bhairava
+  
+  sudo grub-install && sudo grub-mkconfig -o  /boot/grub/grub.cfg
+
+
+
+}
+
+
+
